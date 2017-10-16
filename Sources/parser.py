@@ -3,13 +3,26 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 
-#Ce programme a pour but d'écrire un fichier décrivant les columns
+#Ce programme a pour but d'écrire un fichier décrivant les colonnes et les différentes valeurs possible
 
-dLanguage = pd.read_table("../Datas/language.csv", ',', index_col=0)
+df = pd.read_table("../Data/language.csv", ',')
 
-for row in dLanguage.itertuples(index=True, name='Pandas'):
-    print (row)
+modal_value_file = open("modal_value", "w")
+for c in df.columns.values:
+    possible_values = []
+    str_values = ""
+    if (c!="latitude" and c!="longitude" and c!="wals_code" \
+    and c!="iso_code" and c!="glottocode" and c!="Name" and c!="countrycodes"):
+        for i in range(len(df)):
+            if (df[c][i]!=None and df[c][i] not in possible_values):
+                possible_values.append(df[c][i])
+                str_values += str(df[c][i]) + " ; "
+        if (str_values!=""):
+            modal_value_file.write(c + " : " + str_values + "\n\n")
 
-#for a in list(dLanguage.columns.values):
-#    print(a)
-#    for ()
+#for row in df.itertuples(index=True, name='Pandas'):
+#    for v in row:
+#        if v != None:
+#            print(v)
+#        else:
+#            print("No value")
