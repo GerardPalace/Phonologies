@@ -11,6 +11,7 @@ modal_value_file = open("modal_value", "w")
 for c in df.columns.values:
     possible_values = []
     str_values = ""
+    #On retire les valeurs trop uniques ou quantitatives
     if (c!="latitude" and c!="longitude" and c!="wals_code" \
     and c!="iso_code" and c!="glottocode" and c!="Name" and c!="countrycodes"):
         for i in range(len(df)):
@@ -19,10 +20,3 @@ for c in df.columns.values:
                 str_values += str(df[c][i]) + " ; "
         if (str_values!=""):
             modal_value_file.write(c + " : " + str_values + "\n\n")
-
-#for row in df.itertuples(index=True, name='Pandas'):
-#    for v in row:
-#        if v != None:
-#            print(v)
-#        else:
-#            print("No value")
