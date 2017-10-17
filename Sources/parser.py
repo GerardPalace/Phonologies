@@ -4,7 +4,10 @@ import matplotlib.pyplot as plt
 import sys
 import math
 
-#Ce programme a pour but d'écrire un fichier décrivant les colonnes et les différentes valeurs possible
+#Ce programme a pour but de comprendre rapidement chaque colonnes et quelles
+#valeurs peuvent prendre chacune d'entres elles. Pour cela il crée un nouveau
+#fichier (a terme LateX) dans lequelles chaque Colonnes est associés à ses
+#valeurs possibles.
 
 def progressbar(ratio):
     percent = int(ratio*100)
