@@ -28,8 +28,12 @@ for c in df.columns.values:
         for i in range(len(df)):
             if (pd.isnull(df.loc[i, c])==False and df[c][i] not in possible_values):
                 possible_values.append(df[c][i])
-                str_values += str(df[c][i]) + " ; "
-        if (str_values!=""):
-            modal_value_file.write(c + " : " + str_values + "\n\n")
+        possible_values.sort()
+        modal_value_file.write("\n"+ c+" :\n")
+        for value in possible_values:
+            if c=="genus" or c=="family":
+                modal_value_file.write(value+" ; ")
+            else:
+                modal_value_file.write(value+"\n")
 progressbar(1)
 print("")
