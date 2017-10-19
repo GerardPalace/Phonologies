@@ -4,16 +4,19 @@ import matplotlib.pyplot as plt
 import sys
 import pylatex as px
 
-#Ce programme a pour but de comprendre rapidement chaque colonnes et quelles
-#valeurs peuvent prendre chacune d'entres elles. Pour cela il crée un nouveau
-#fichier (a terme LateX) dans lequelles chaque Colonnes est associés à ses
-#valeurs possibles.
+# Ce programme a pour but de comprendre rapidement chaque colonnes et quelles
+# valeurs peuvent prendre chacune d'entres elles. Pour cela il crée un nouveau
+# fichier (pour l'instant 2 un txt et un pdf) dans lequelles chaque Colonnes
+# est associés à ses valeurs possibles.
 
 def progressbar(ratio):
     percent = int(ratio*100)
     progress = int(ratio*10)
-    strbar = "[" + "#"*progress + " "*(10-progress)+ "]" + str(percent) + "%"
-    print("\r"*len(strbar) + strbar, end='', flush='True')
+    progress_str = "[" + "#"*progress + " "*(10-progress)+ "]" + str(percent) + "% "
+    end_print = ''
+    if ratio == 1:
+        end_print = '\n'
+    print("\r"*len(progress_str) + progress_str, end=end_print, flush='True')
 
 
 def getNumberOutOfString(str):
@@ -34,45 +37,59 @@ def compareQualitativeString(a):
     else:
         return 0
 
+def createLateXDocument(filepath):
+    doc = px.Document(filepath)
+    doc.preamble.append(px.Command('title', 'Description des variables quantitatives'))
+    doc.preamble.append(px.Command('author', 'parser.py'))
+    doc.preamble.append(px.Command('date', px.utils.NoEscape(r'\today')))
+    doc.append(px.utils.NoEscape(r'\maketitle'))
+    return doc
+
 def writeLateXSection(title, content, doc):
     with doc.create(px.Section(title)):
         for value in content:
             doc.append(value + " ; ")
 
-def parse(filepath="../Data/language.csv", separator=","):
-    df = pd.read_table(filepath, separator, encoding='latin-1')
+def writeTxtSection(title, content, file, content_per_raw):
+    file.write("\n" + title +" :\n")
+    i = 1
+    for value in content:
+        if i % content_per_raw == 0 or i > len(content):
+            file.write(value+"\n")
+        else:
+            file.write(value + " ; ")
+        i += 1
+    file.write("\n")
 
-    df_quali = df.select_dtypes(include=["object"])
+def parseQualitativeValue(dataframe):
+    lateX_file = createLateXDocument("../LateX/Description")
+    txt_file = open("description.txt", "w")
 
-    description_doc = px.Document("../LateX/Description")
-    description_doc.create(px.Section("Variables Qualitatives\n"))
-
-    #descr_file = open("description.txt", "w")
-    total = len(df.columns)
-    current = 0
-    for c in df_quali.columns.values:
-        progressbar(current/total)
-        current+=1
+    total = len(dataframe.columns)
+    current_progress = 0
+    for columns_name in dataframe.columns.values:
+        bar_len = progressbar(current_progress/total)
+        current_progress += 1
         possible_values = []
         str_values = ""
         #On retire les valeurs trop uniques ou quantitatives
-        if (c!="iso_code" and c!="countrycodes" and c!="glottocode" and c!="Name" and c!="wals_code"\
-            and c!="genus" and c!="family"):
-            for i in range(len(df_quali)):
-                if (pd.isnull(df_quali.loc[i, c])==False and df_quali[c][i] not in possible_values):
-                    possible_values.append(df_quali[c][i])
-            possible_values = sorted(possible_values, key=compareQualitativeString)
-            writeLateXSection(c, possible_values, description_doc)
-            #descr_file.write("\n"+ c+" :\n")
-            #for value in possible_values:
-            #    if c=="genus" or c=="family":
-            #        descr_file.write(value+" ; ")
-            #    else:
-            #        descr_file.write(value+"\n")
-    description_doc.generate_pdf(clean_tex=False, compiler='lualatex')
-    description_doc.generate_tex()
+        #if (c!="iso_code" and c!="countrycodes" and c!="glottocode" and c!="Name" and c!="wals_code"\
+        #    and c!="genus" and c!="family"):
+        for i in range(len(dataframe)):
+            if (pd.isnull(dataframe.loc[i, columns_name])==False and \
+                dataframe[columns_name][i] not in possible_values):
+                possible_values.append(dataframe[columns_name][i])
+        possible_values = sorted(possible_values, key=compareQualitativeString)
+        writeLateXSection(columns_name, possible_values, lateX_file)
+        writeTxtSection(columns_name, possible_values, txt_file, 20)
 
+    lateX_file.generate_pdf(clean_tex=False, compiler='lualatex')
     progressbar(1)
-    print("")
+
+def parse(filepath="../Data/language.csv", separator=","):
+    df_total = pd.read_table(filepath, separator, encoding='latin-1')
+
+    df_qualitative = df_total.select_dtypes(include=["object"])
+    parseQualitativeValue(df_qualitative)
 
 parse()
