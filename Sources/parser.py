@@ -1,8 +1,9 @@
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
-import sys
 import pylatex as px
+import pandas as pd
+import numpy as np
+import sys
+import os
 
 # Ce programme a pour but de comprendre rapidement chaque colonnes et quelles
 # valeurs peuvent prendre chacune d'entres elles. Pour cela il crée un nouveau
@@ -12,7 +13,7 @@ import pylatex as px
 def progressbar(ratio):
     percent = int(ratio*100)
     progress = int(ratio*10)
-    progress_str = "[" + "#"*progress + " "*(10-progress)+ "]" + str(percent) + "% "
+    progress_str = "[" + "#"*progress + " "*(10-progress)+ "]" + str(percent) + "%"
     end_print = ''
     if ratio == 1:
         end_print = '\n'
@@ -38,6 +39,8 @@ def compareQualitativeString(a):
         return 0
 
 def createLateXDocument(filepath):
+    if not os.path.exists("../LateX"):
+        os.makedirs("../LateX")
     doc = px.Document(filepath)
     doc.preamble.append(px.Command('title', 'Description des variables quantitatives'))
     doc.preamble.append(px.Command('author', 'parser.py'))
