@@ -66,7 +66,7 @@ def createTxT(filepath):
     pathdirectory += split[-2]
     if not os.path.exists(pathdirectory):
         os.makedirs(pathdirectory)
-    open(filepath, "w")
+    return open(filepath, "w", encoding='utf-8')
 
 
 def writeTxtSection(title, content, file, content_per_raw):
@@ -107,7 +107,7 @@ def parseQualitativeValue(dataframe):
     progressbar(1)
 
 def parse(filepath="../Data/language.csv", separator=","):
-    df_total = pd.read_table(filepath, separator, encoding='latin-1')
+    df_total = pd.read_table(filepath, separator, encoding='utf-8')
 
     df_qualitative = df_total.select_dtypes(include=["object"])
     parseQualitativeValue(df_qualitative)
