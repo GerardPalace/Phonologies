@@ -18,3 +18,8 @@ Bibliothèques à importer
 	sys
 
 https://github.com/GerardPalace/Phonologies.git
+
+Autres liens :
+https://matplotlib.org/contents.html
+http://leafletjs.com/examples
+https://github.com/johan/world.geo.json/tree/master/countries
