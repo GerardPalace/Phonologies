@@ -1,7 +1,13 @@
--> Parser en Latex
--> Montrer sur une carte un point en fonction de la latitude et la longitude
+
+Programmation :
+-> Parser en Latex (La fac n'a pas pylatex) 
+-> Montrer sur une carte un point en fonction du pays 
 -> Montrer sur une carte un pays en fonction de son nom (et de la latitude et longitude ?)
--> Le parser différencie les différents type de variables automatiquement
--> Le parser analyse les variables de même type et propose des descriptions statistique
- de celles ci
+-> Trouver l'encodage du fichier
+
+Sujet :
 -> Regrouper les colonnes selon leurs type (phonologie, morphologie, syntaxe etc...)
+//-> trouver les colonnes qui parle de voyelles de consonnes de ton et de nasalisation
+-> Trouver les colonnes distribution géo, morphologie et inventaire de sons
+
+-> Trouver d'autre problématiques. 

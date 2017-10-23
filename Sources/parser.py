@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import pylatex as px
+#import pylatex as px
 import pandas as pd
 import numpy as np
 import sys
@@ -39,8 +39,13 @@ def compareQualitativeString(a):
         return 0
 
 def createLateXDocument(filepath):
-    if not os.path.exists("../LateX"):
-        os.makedirs("../LateX")
+    split = filepath.split("/")
+    pathdirectory = ""
+    for i in range(len(split) - 2):
+        pathdirectory += split[i] + "/"
+    pathdirectory += split[-2]
+    if not os.path.exists(pathdirectory):
+        os.makedirs(pathdirectory)
     doc = px.Document(filepath)
     doc.preamble.append(px.Command('title', 'Description des variables quantitatives'))
     doc.preamble.append(px.Command('author', 'parser.py'))
@@ -52,6 +57,17 @@ def writeLateXSection(title, content, doc):
     with doc.create(px.Section(title)):
         for value in content:
             doc.append(value + " ; ")
+
+def createTxT(filepath):
+    split = filepath.split("/")
+    pathdirectory = ""
+    for i in range(len(split) - 2):
+        pathdirectory += split[i] + "/"
+    pathdirectory += split[-2]
+    if not os.path.exists(pathdirectory):
+        os.makedirs(pathdirectory)
+    open(filepath, "w")
+
 
 def writeTxtSection(title, content, file, content_per_raw):
     file.write("\n" + title +" :\n")
@@ -65,8 +81,9 @@ def writeTxtSection(title, content, file, content_per_raw):
     file.write("\n")
 
 def parseQualitativeValue(dataframe):
-    lateX_file = createLateXDocument("../LateX/Description")
-    txt_file = open("description.txt", "w")
+#    lateX_file = createLateXDocument("../LateX/Description")
+    txt_file = createTxT("../Resultats/description.txt")
+
 
     total = len(dataframe.columns)
     current_progress = 0
@@ -83,10 +100,10 @@ def parseQualitativeValue(dataframe):
                 dataframe[columns_name][i] not in possible_values):
                 possible_values.append(dataframe[columns_name][i])
         possible_values = sorted(possible_values, key=compareQualitativeString)
-        writeLateXSection(columns_name, possible_values, lateX_file)
+#        writeLateXSection(columns_name, possible_values, lateX_file)
         writeTxtSection(columns_name, possible_values, txt_file, 20)
 
-    lateX_file.generate_pdf(clean_tex=False, compiler='lualatex')
+#    lateX_file.generate_pdf(clean_tex=False, compiler='lualatex')
     progressbar(1)
 
 def parse(filepath="../Data/language.csv", separator=","):

@@ -14,7 +14,7 @@ Y a-t-il des liens entre inventaire de sons et la morphologie des langues ?
 Bibliothèques à importer 
 	numpy 
 	pandas 
-	matplolib.pyplot 	
+	matplolib.pyplot 
 	sys
 
 https://github.com/GerardPalace/Phonologies.git
