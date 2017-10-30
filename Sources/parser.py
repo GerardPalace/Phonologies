@@ -100,16 +100,28 @@ def parseQualitativeValue(dataframe):
                 dataframe[columns_name][i] not in possible_values):
                 possible_values.append(dataframe[columns_name][i])
         possible_values = sorted(possible_values, key=compareQualitativeString)
-#        writeLateXSection(columns_name, possible_values, lateX_file)
+#       writeLateXSection(columns_name, possible_values, lateX_file)
         writeTxtSection(columns_name, possible_values, txt_file, 20)
-
-#    lateX_file.generate_pdf(clean_tex=False, compiler='lualatex')
+#   lateX_file.generate_pdf(clean_tex=False, compiler='lualatex')
     progressbar(1)
+
+def writeGeoJSON(dataframe):
+    geoJSON_file = createTxT("Map/coordinates.js")
+    geoJSON_file.write("var coordinates = {\"type\": \"FeatureCollection\", \"features\":[")
+    for row in dataframe.itertuples(index=True, name='Pandas'):
+        value = row[dataframe.columns.get_loc("1A Consonant Inventories") + 1]
+        if pd.isnull(value) == False:
+            valueNumber = str(getNumberOutOfString(value))
+            properties = "\"properties\":{\"name\":\"" + row.Name + "\", \"valueNumber\":" + valueNumber  + ", \"description\":\"" + value[len(valueNumber) + 1:] + "\"}"
+            geometry = "\"geometry\":{\"type\":\"Point\", \"coordinates\":[" + str(row.longitude) + ", " + str(row.latitude) + "]}"
+            geoJSON_file.write("{\"type\":\"Feature\"," + properties + "," + geometry + "},")
+    geoJSON_file.write("]}")
 
 def parse(filepath="../Data/language.csv", separator=","):
     df_total = pd.read_table(filepath, separator, encoding='utf-8')
+    writeGeoJSON(df_total)
 
-    df_qualitative = df_total.select_dtypes(include=["object"])
-    parseQualitativeValue(df_qualitative)
+    #df_qualitative = df_total.select_dtypes(include=["object"])
+    #parseQualitativeValue(df_qualitative)
 
 parse()
