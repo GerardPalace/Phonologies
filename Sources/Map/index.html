@@ -25,7 +25,7 @@
 
 			function onEachFeature(feature, layer) {
 				if (feature.properties && feature.properties) {
-					layer.bindPopup(feature.properties.name + " " + feature.properties.description);
+					layer.bindPopup("Langue : " + feature.properties.name + "<br> Consonant Inventory : " + feature.properties.description);
 				}
 			}
 
@@ -51,6 +51,26 @@
 
 			L.geoJson(coordinates, { onEachFeature: onEachFeature, pointToLayer: pointToLayer
 			}).addTo(mymap);
+
+			var legend = L.control({position: 'bottomright'});
+
+			legend.onAdd = function(mymap)
+			{
+    		var div = L.DomUtil.create('div', 'info legend'),
+        grades = [1, 2, 3, 4, 5]
+        labels = ["Small", "Moderatly small", "Average", "Moderately large", "Large"];
+
+    		// loop through our density intervals and generate a label with a colored square for each interval
+				div.innerHTML += "<h4>Consonant Inventory</h4>"
+    		for (var i = 0; i < grades.length; i++)
+				{
+        	div.innerHTML += '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            								labels[i] + '<br>';
+    		}
+    		return div;
+			};
+
+			legend.addTo(mymap);
 		</script>
 	</body>
 </html>
