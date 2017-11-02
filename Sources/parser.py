@@ -88,7 +88,7 @@ def parseQualitativeValue(dataframe):
     total = len(dataframe.columns)
     current_progress = 0
     for columns_name in dataframe.columns.values:
-        bar_len = progressbar(current_progress/total)
+        progressbar(current_progress/total)
         current_progress += 1
         possible_values = []
         str_values = ""
@@ -105,23 +105,42 @@ def parseQualitativeValue(dataframe):
 #   lateX_file.generate_pdf(clean_tex=False, compiler='lualatex')
     progressbar(1)
 
-def writeGeoJSON(dataframe):
-    geoJSON_file = createTxT("Map/coordinates.js")
+def writeGeoJSON(dataframe, filename, columns_name):
+    geoJSON_file = createTxT("Map/" + filename + ".js")
     geoJSON_file.write("var coordinates = {\"type\": \"FeatureCollection\", \"features\":[")
+
+    total = dataframe.shape[0]
+    current_progress = 0
     for row in dataframe.itertuples(index=True, name='Pandas'):
-        value = row[dataframe.columns.get_loc("1A Consonant Inventories") + 1]
-        if pd.isnull(value) == False:
-            valueNumber = str(getNumberOutOfString(value))
-            properties = "\"properties\":{\"name\":\"" + row.Name + "\", \"valueNumber\":" + valueNumber  + ", \"description\":\"" + value[len(valueNumber) + 1:] + "\"}"
+        progressbar(current_progress/total)
+        current_progress += 1
+        values = []
+        abort = False
+        for name in columns_name:
+            if pd.isnull(row[dataframe.columns.get_loc(name) + 1]) == False:
+                values.append(row[dataframe.columns.get_loc(name) + 1])
+            else:
+                abort = True
+                break
+        if abort == False:
+            properties = "\"properties\":{\"name\":\"" + row.Name + "\", "
+            for i, value in enumerate(values):
+                valueNumber = str(getNumberOutOfString(value))
+                properties += "\"valueNumber" + str(i+1) + "\":" + valueNumber  + ", \"description" + str(i+1) + "\":\"" + value[len(valueNumber) + 1:] + "\", "
+            properties += "}"
             geometry = "\"geometry\":{\"type\":\"Point\", \"coordinates\":[" + str(row.longitude) + ", " + str(row.latitude) + "]}"
             geoJSON_file.write("{\"type\":\"Feature\"," + properties + "," + geometry + "},")
+    progressbar(1)
     geoJSON_file.write("]}")
 
-def parse(filepath="../Data/language.csv", separator=","):
+def parse(filepath="../Data/language.csv", separator=",", full="False"):
     df_total = pd.read_table(filepath, separator, encoding='utf-8')
-    writeGeoJSON(df_total)
-
-    #df_qualitative = df_total.select_dtypes(include=["object"])
-    #parseQualitativeValue(df_qualitative)
-
+    print("GeoJson...")
+    writeGeoJSON(df_total, "coord_consonant", ["1A Consonant Inventories"])
+    writeGeoJSON(df_total, "coord_vowel", ["2A Vowel Quality Inventories"])
+    writeGeoJSON(df_total, "coord_ratio", ["1A Consonant Inventories", "2A Vowel Quality Inventories", "3A Consonant-Vowel Ratio"])
+    if full==True:
+        print("Description...")
+        df_qualitative = df_total.select_dtypes(include=["object"])
+        parseQualitativeValue(df_qualitative)
 parse()
