@@ -5,11 +5,6 @@ import numpy as np
 import sys
 import os
 
-# Ce programme a pour but de comprendre rapidement chaque colonnes et quelles
-# valeurs peuvent prendre chacune d'entres elles. Pour cela il crée un nouveau
-# fichier (pour l'instant 2 un txt et un pdf) dans lequelles chaque Colonnes
-# est associés à ses valeurs possibles.
-
 def progressbar(ratio):
     percent = int(ratio*100)
     progress = int(ratio*10)
@@ -143,8 +138,10 @@ def parse(filepath="../Data/language.csv", separator=",", full="False"):
         print("Description...")
         df_qualitative = df_total.select_dtypes(include=["object"])
         parseQualitativeValue(df_qualitative)
-full = False
-for arg in sys.argv:
-    if arg == "--full":
-        full = True
-parse("../Data/language.csv", ",", full)
+
+if __name__ == "__main__":
+    full = False
+    for arg in sys.argv:
+        if arg == "--full":
+            full = True
+    parse("../Data/language.csv", ",", full)
