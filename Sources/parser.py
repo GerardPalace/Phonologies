@@ -143,4 +143,8 @@ def parse(filepath="../Data/language.csv", separator=",", full="False"):
         print("Description...")
         df_qualitative = df_total.select_dtypes(include=["object"])
         parseQualitativeValue(df_qualitative)
-parse()
+full = False
+for arg in sys.argv:
+    if arg == "--full":
+        full = True
+parse("../Data/language.csv", ",", full)
