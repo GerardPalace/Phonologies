@@ -20,8 +20,7 @@ def getPercentageOfColumns(dataframe, columns_name, possible_values):
                 if value == v:
                     percentage[i] += 1
     for i, p in enumerate(percentage):
-        percentage[i] = p/size * 100
-    print(percentage)
+        percentage[i] = round(p/size * 100, 2)
     return percentage
 
 def compareColumns(dataframe, x_name, y_name):
@@ -30,9 +29,18 @@ def compareColumns(dataframe, x_name, y_name):
     for v in x_possible:
         x.append(dataframe[dataframe[x_name] == v])
     y_possible = getPossibleValues(dataframe, y_name)
-    getPercentageOfColumns(dataframe, y_name, y_possible)
+    total_repartition = getPercentageOfColumns(dataframe, y_name, y_possible)
+    x_repartitions = []
     for value in x:
-        getPercentageOfColumns(value, y_name, y_possible)
+        x_repartitions.append(getPercentageOfColumns(value, y_name, y_possible))
+
+    print(y_name + " pourcentages globaux : ")
+    for i, v in enumerate(y_possible):
+        print("   " + v +  " : " + str(total_repartition[i]) + "%")
+    for i, v in enumerate(x_repartitions):
+        print(x_name + " " + x_possible[i] + " : ")
+        for j, perc in enumerate(v):
+            print("   " + y_possible[j] + " : " + str(perc) + "%")
 
 if __name__ == "__main__":
     df_total = pd.read_table("../Data/language.csv", ",", encoding='utf-8')
