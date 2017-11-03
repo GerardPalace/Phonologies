@@ -24,17 +24,17 @@ def getPercentageOfColumns(dataframe, columns_name, possible_values):
     print(percentage)
     return percentage
 
-def consonant_vowel_graph(dataframe):
-    vowel_small = dataframe[dataframe["2A Vowel Quality Inventories"] == "1 Small (2-4)"]
-    vowel_average = dataframe[dataframe["2A Vowel Quality Inventories"] == "2 Average (5-6)"]
-    vowel_large = dataframe[dataframe["2A Vowel Quality Inventories"] == "3 Large (7-14)"]
-    vowels = [vowel_small, vowel_average, vowel_large]
-
-    consonant_possible = getPossibleValues(dataframe, "1A Consonant Inventories")
-    getPercentageOfColumns(dataframe, "1A Consonant Inventories", consonant_possible)
-    for vowel in vowels:
-        getPercentageOfColumns(vowel, "1A Consonant Inventories", consonant_possible)
+def compareColumns(dataframe, x_name, y_name):
+    x_possible = getPossibleValues(dataframe, x_name)
+    x = []
+    for v in x_possible:
+        x.append(dataframe[dataframe[x_name] == v])
+    y_possible = getPossibleValues(dataframe, y_name)
+    getPercentageOfColumns(dataframe, y_name, y_possible)
+    for value in x:
+        getPercentageOfColumns(value, y_name, y_possible)
 
 if __name__ == "__main__":
     df_total = pd.read_table("../Data/language.csv", ",", encoding='utf-8')
-    consonant_vowel_graph(df_total)
+    compareColumns(df_total, "2A Vowel Quality Inventories", "1A Consonant Inventories")
+    compareColumns(df_total, "13A Tone", "10A Vowel Nasalization")
