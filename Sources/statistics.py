@@ -23,6 +23,48 @@ def getPercentageOfColumns(dataframe, columns_name, possible_values):
         percentage[i] = round(p/size * 100, 2)
     return percentage
 
+def printComparaison(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition):
+    print(y_name + " pourcentages globaux : ")
+    for i, v in enumerate(y_possible):
+        print("   " + v +  " : " + str(total_repartition[i]) + "%")
+    for i, v in enumerate(x_repartitions):
+        print(x_name + " " + x_possible[i] + " : ")
+        for j, perc in enumerate(v):
+            print("   " + y_possible[j] + " : " + str(perc) + "%")
+
+def getLabelName(string):
+    res = ""
+    splitted = string.split(" ")
+    for i, split_str in enumerate(splitted):
+        if (i > 0):
+            res += split_str.lower() + " "
+    return res[:-1]
+
+def getGraphFromComparaison(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition):
+    x_name = getLabelName(x_name)
+    y_name = getLabelName(y_name)
+    for i, v in enumerate(x_possible):
+        x_possible[i] = getLabelName(v)
+    for i, v in enumerate(y_possible):
+        y_possible[i] = getLabelName(v)
+
+    plt.title("Pourcentage de " + y_name + " en fonction de " + x_name)
+    width = 0.9/(len(x_repartitions)+1)
+    range1 = range(len(total_repartition))
+    colors = ["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]
+    label = "Pourcentage de " + y_name + " dans tous le dataframe"
+    plt.bar(range1, total_repartition, width=width, color=[colors[0] for i in total_repartition], label=label)
+    print(x_repartitions)
+    for s, x in enumerate(x_repartitions):
+        rangei = [l + width*(s+1) for l in range1]
+        label = "Pourcentage de " + y_name + " si " + x_name + "=" + x_possible[s]
+        plt.bar(rangei, x, width=width, color=[colors[s + 1] for i in x], label=label)
+    plt.xticks([r + width for r in range(len(total_repartition))], y_possible)
+    plt.ylabel("Pourcentage (%)")
+    plt.xlabel(y_name)
+    plt.legend()
+    plt.show()
+
 def compareColumns(dataframe, x_name, y_name):
     x_possible = getPossibleValues(dataframe, x_name)
     x = []
@@ -33,14 +75,9 @@ def compareColumns(dataframe, x_name, y_name):
     x_repartitions = []
     for value in x:
         x_repartitions.append(getPercentageOfColumns(value, y_name, y_possible))
+    #printComparaison(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition)
+    getGraphFromComparaison(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition)
 
-    print(y_name + " pourcentages globaux : ")
-    for i, v in enumerate(y_possible):
-        print("   " + v +  " : " + str(total_repartition[i]) + "%")
-    for i, v in enumerate(x_repartitions):
-        print(x_name + " " + x_possible[i] + " : ")
-        for j, perc in enumerate(v):
-            print("   " + y_possible[j] + " : " + str(perc) + "%")
 
 if __name__ == "__main__":
     df_total = pd.read_table("../Data/language.csv", ",", encoding='utf-8')
