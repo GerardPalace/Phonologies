@@ -9,7 +9,7 @@ import sys
 #    avec les colonnes demandé dans une liste. (writeGeoJSON)
 # -> Faire une listes des colonnes avec pour chacune les valeurs possibles. (parseQualitativeValue)
 
-def writeTxtSection(title, content, file, content_per_raw):
+def _writeTxtSection(title, content, file, content_per_raw):
     file.write("\n" + title +" :\n")
     i = 1
     for value in content:
@@ -27,7 +27,7 @@ def getPossibleValues(dataframe, columns_name):
             possible_values.append(dataframe[columns_name][i])
     return sorted(possible_values, key=compareQualitativeString)
 
-def parseQualitativeValue(dataframe):
+def writeColumnDescription(dataframe):
     txt_file = createTxT("../Resultats/description.txt")
     total = len(dataframe.columns)
     current_progress = 0
@@ -35,7 +35,7 @@ def parseQualitativeValue(dataframe):
         progressbar(current_progress/total)
         current_progress += 1
         possible_values = getPossibleValues(dataframe, columns_name)
-        writeTxtSection(columns_name, possible_values, txt_file, 20)
+        _writeTxtSection(columns_name, possible_values, txt_file, 20)
     progressbar(1)
 
 def writeGeoJSON(dataframe, filename, columns_name):
@@ -78,4 +78,4 @@ if __name__ == "__main__":
     if full==True:
         print("Description...")
         df_qualitative = df_total.select_dtypes(include=["object"])
-        parseQualitativeValue(df_qualitative)
+        writeColumnDescription(df_qualitative)
