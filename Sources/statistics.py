@@ -52,12 +52,12 @@ def getGraphFromComparaison(x_repartitions, x_name, x_possible, y_name, y_possib
     width = 0.9/(len(x_repartitions)+1)
     range1 = range(len(total_repartition))
     colors = ["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]
-    label = "Pourcentage de " + y_name + " dans tous le dataframe"
+    label = "Parmi toutes les valeurs"
     plt.bar(range1, total_repartition, width=width, color=[colors[0] for i in total_repartition], label=label)
     print(x_repartitions)
     for s, x in enumerate(x_repartitions):
         rangei = [l + width*(s+1) for l in range1]
-        label = "Pourcentage de " + y_name + " si " + x_name + "=" + x_possible[s]
+        label = "Si " + x_name + " est " + x_possible[s]
         plt.bar(rangei, x, width=width, color=[colors[s + 1] for i in x], label=label)
     plt.xticks([r + width for r in range(len(total_repartition))], y_possible)
     plt.ylabel("Pourcentage (%)")
