@@ -10,13 +10,13 @@ import sys
 # -> Faire une listes des colonnes avec pour chacune les valeurs possibles. (parseQualitativeValue)
 
 def _writeTxtSection(title, content, file, content_per_raw):
-    file.write("\n" + title +" :\n")
+    file.write(title)
     i = 1
     for value in content:
         if i % content_per_raw == 0 or i > len(content):
             file.write(value+"\n")
         else:
-            file.write(value + " ; ")
+            file.write(value + ", ")
         i += 1
     file.write("\n")
 
@@ -27,14 +27,16 @@ def getPossibleValues(dataframe, columns_name):
             possible_values.append(dataframe[columns_name][i])
     return sorted(possible_values, key=compareQualitativeString)
 
-def writeColumnDescription(dataframe):
+def writeColumnDescription(dataframe, writePossible):
     txt_file = createTxT("../Resultats/description.txt")
     total = len(dataframe.columns)
     current_progress = 0
     for columns_name in dataframe.columns.values:
         progressbar(current_progress/total)
         current_progress += 1
-        possible_values = getPossibleValues(dataframe, columns_name)
+        possible_values = []
+        if writePossible == True:
+            possible_values = getPossibleValues(dataframe, columns_name)
         _writeTxtSection(columns_name, possible_values, txt_file, 20)
     progressbar(1)
 
@@ -67,9 +69,12 @@ def writeGeoJSON(dataframe, filename, columns_name):
 
 if __name__ == "__main__":
     full = False
+    desc = False
     for arg in sys.argv:
         if arg == "--full":
             full = True
+        elif arg == "--desc":
+            desc = True
     df_total = pd.read_table("../Data/language.csv", ",", encoding='utf-8')
     print("GeoJson...")
     writeGeoJSON(df_total, "coord_consonant", ["1A Consonant Inventories"])
@@ -78,4 +83,4 @@ if __name__ == "__main__":
     if full==True:
         print("Description...")
         df_qualitative = df_total.select_dtypes(include=["object"])
-        writeColumnDescription(df_qualitative)
+        writeColumnDescription(df_qualitative, desc)
