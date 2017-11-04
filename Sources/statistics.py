@@ -33,7 +33,7 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     plt.title(title)
     width = 0.9/(len(x_repartitions))
     range1 = range(len(total_repartition))
-    colors = ["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]
+    colors = ["#FF00FF", "#bc80bd", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#ffffb3", "#ccebc5", "#ffed6f"]
     label = "Parmi toutes les valeurs"
     for s, x in enumerate(x_repartitions):
         rangei = [l + width*s for l in range1]
@@ -41,7 +41,11 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
         ax = plt.bar(rangei, x, width=width, color=[colors[s + 1] for i in x], label=label)
         axes = plt.gca()
         for i, rect in enumerate(ax.patches):
-            axes.add_artist(line.Line2D((rect.get_x(), rect.get_x() + rect.get_width()), (total_repartition[i], total_repartition[i]), color=colors[0], linewidth=2, linestyle = 'dashed'))
+            rect_x = rect.get_x()
+            rect_y = rect.get_height()/2
+            rect_width = rect.get_width()
+            plt.text(rect_x + rect_width/2, rect_y, str(int(x[i])) + "%",ha="center", va="bottom")
+            axes.add_artist(line.Line2D((rect_x, rect_x + rect_width), (total_repartition[i], total_repartition[i]), color=colors[0], linewidth=2, linestyle = 'dashed'))
 
     plt.xticks([r + width for r in range(len(total_repartition))], y_possible)
     plt.ylabel("Pourcentage (%)")
@@ -68,9 +72,9 @@ def _getPercentageOfColumns(dataframe, columns_name, possible_values):
 
 def compareColumns(dataframe, x_name, y_name, alt_x_name="", alt_y_name="", show=False):
     if alt_x_name == "":
-        alt_x_name = x_name
+        alt_x_name = _getLabelName(x_name)
     if alt_y_name == "":
-        alt_y_name = y_name
+        alt_y_name = _getLabelName(y_name)
     x_possible = getPossibleValues(dataframe, x_name)
     x = []
     for v in x_possible:
@@ -84,6 +88,7 @@ def compareColumns(dataframe, x_name, y_name, alt_x_name="", alt_y_name="", show
     if show == True:
         plt.show()
     plt.close(fig)
+
 if __name__ == "__main__":
     show = False
     for arg in sys.argv:
