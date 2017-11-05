@@ -41,7 +41,7 @@ def writeColumnDescription(dataframe, writePossible=False):
     progressbar(1)
 
 def writeGeoJSON(dataframe, filename, columns_name):
-    geoJSON_file = createTxT("Map/" + filename + ".js")
+    geoJSON_file = createTxT("../HTML/Scripts/" + filename + ".js")
     geoJSON_file.write("var coordinates = {\"type\": \"FeatureCollection\", \"features\":[")
     total = dataframe.shape[0]
     current_progress = 0

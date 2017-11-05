@@ -74,7 +74,7 @@ p
 
 a
 {
-	color: #6fd7f1;	border-bottom: 1px solid #6fd7f1;
+	color: #2bcbf7;	border-bottom: 1px solid #2bcbf7;
 	font-family: 'Alegreya Sans';
 	text-decoration: none;
 }
@@ -83,4 +83,9 @@ a:hover
 {
 	border-bottom: 1px solid #ddd;
 	color: #555;
+}
+
+a:visited
+{
+  color: #b66161
 }
