@@ -21,7 +21,7 @@ def _getLabelName(string):
             res += split_str.lower() + " "
     return res[:-1]
 
-def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition):
+def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition, path_directory):
     global fig_id
     for i, v in enumerate(x_possible):
         x_possible[i] = _getLabelName(v)
@@ -59,7 +59,7 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     plt.legend(handles, labels)
 
     fig_id = fig_id + 1
-    filepath = "../Resultats/figure" + str(fig_id) + ".svg"
+    filepath = path_directory + "/figure" + str(fig_id) + ".svg"
     createDirFromPath(filepath)
     plt.savefig(filepath)
     return fig
@@ -78,11 +78,7 @@ def _getPercentageOfColumns(dataframe, columns_name, possible_values):
         percentage[i] = round(p/size * 100, 2)
     return percentage
 
-def compareColumns(dataframe, x_name, y_name, alt_x_name=None, alt_y_name=None, show=False):
-    if alt_x_name == None:
-        alt_x_name = _getLabelName(x_name)
-    if alt_y_name == None:
-        alt_y_name = _getLabelName(y_name)
+def compareColumns(dataframe, x_name, y_name, path_directory):
     x_possible = getPossibleValues(dataframe, x_name)
     x = []
     for v in x_possible:
@@ -92,17 +88,20 @@ def compareColumns(dataframe, x_name, y_name, alt_x_name=None, alt_y_name=None, 
     x_repartitions = []
     for value in x:
         x_repartitions.append(_getPercentageOfColumns(value, y_name, y_possible))
-    fig = _drawGraph(x_repartitions, alt_x_name, x_possible, alt_y_name, y_possible, total_repartition)
-    if show == True:
-        plt.show()
+    fig = _drawGraph(x_repartitions, _getLabelName(x_name), x_possible, _getLabelName(y_name), y_possible, total_repartition, path_directory)
     plt.close(fig)
 
 if __name__ == "__main__":
-    show = False
-    for arg in sys.argv:
-        if arg=="--show":
-            show = True
-    df_total = pd.read_table("../Data/language.csv", ",", encoding='utf-8')
+    argc = len(sys.argv)
+    if (argc < 3):
+        print("Utilisation: statistics CSV_FILE PATH_DIRECTORY")
+    if sys.argv[1][-4:] == ".csv":
+        csv_file = sys.argv[1]
+    else:
+        print("Utilisation: statistics CSV_FILE PATH_DIRECTORY")
+    path_directory = sys.argv[2]
+
+    df_total = pd.read_table(csv_file, ",", encoding='utf-8')
 
     morphology = ["20A Fusion of Selected Inflectional Formatives", "21A Exponence of Selected Inflectional Formatives", "22A Inflectional Synthesis of the Verb",\
     "23A Locus of Marking in the Clause", "24A Locus of Marking in Possessive Noun Phrases", "25A Locus of Marking: Whole-language Typology", \
@@ -114,20 +113,20 @@ if __name__ == "__main__":
 
     progressbar(current_progress/total)
     current_progress += 1
-    compareColumns(df_total, "2A Vowel Quality Inventories", "1A Consonant Inventories", "inventaire de voyelles", "inventaire de consones", show)
+    compareColumns(df_total, "2A Vowel Quality Inventories", "1A Consonant Inventories", path_directory)
 
     progressbar(current_progress/total)
     current_progress += 1
-    compareColumns(df_total, "13A Tone", "10A Vowel Nasalization", "système de tons", "nasalisation des voyelles", show)
+    compareColumns(df_total, "13A Tone", "10A Vowel Nasalization", path_directory)
 
     for name in morphology:
         progressbar(current_progress/total)
         current_progress += 1
-        compareColumns(df_total, "1A Consonant Inventories", name, show=show)
+        compareColumns(df_total, "1A Consonant Inventories", name, path_directory)
         progressbar(current_progress/total)
         current_progress += 1
-        compareColumns(df_total, "2A Vowel Quality Inventories", name, show=show)
+        compareColumns(df_total, "2A Vowel Quality Inventories", name, path_directory)
         progressbar(current_progress/total)
         current_progress += 1
-        compareColumns(df_total, "3A Consonant-Vowel Ratio", name, show=show)
+        compareColumns(df_total, "3A Consonant-Vowel Ratio", name, path_directory)
     progressbar(1)

@@ -27,21 +27,21 @@ def getPossibleValues(dataframe, columns_name):
             possible_values.append(dataframe[columns_name][i])
     return sorted(possible_values, key=compareQualitativeString)
 
-def writeColumnDescription(dataframe, writePossible=False):
-    txt_file = createTxT("../Resultats/description.txt")
+def writeColumnDescription(dataframe, path_directory, writePossibleValue):
+    txt_file = createTxT(path_directory + "/description.txt")
     total = len(dataframe.columns)
     current_progress = 0
     for columns_name in dataframe.columns.values:
         progressbar(current_progress/total)
         current_progress += 1
         possible_values = []
-        if writePossible == True:
+        if writePossibleValue == True:
             possible_values = getPossibleValues(dataframe, columns_name)
         _writeTxtSection(columns_name, possible_values, txt_file, 20)
     progressbar(1)
 
-def writeGeoJSON(dataframe, filename, columns_name):
-    geoJSON_file = createTxT("../HTML/Scripts/" + filename + ".js")
+def writeGeoJSON(dataframe, filename, columns_name, path_directory):
+    geoJSON_file = createTxT(path_directory + "/" + filename + ".js")
     geoJSON_file.write("var coordinates = {\"type\": \"FeatureCollection\", \"features\":[")
     total = dataframe.shape[0]
     current_progress = 0
@@ -68,19 +68,41 @@ def writeGeoJSON(dataframe, filename, columns_name):
     geoJSON_file.write("]}")
 
 if __name__ == "__main__":
-    full = False
-    desc = False
-    for arg in sys.argv:
-        if arg == "--full":
-            full = True
-        elif arg == "--desc":
-            desc = True
-    df_total = pd.read_table("../Data/language.csv", ",", encoding='utf-8')
-    print("GeoJson...")
-    writeGeoJSON(df_total, "coord_consonant", ["1A Consonant Inventories"])
-    writeGeoJSON(df_total, "coord_vowel", ["2A Vowel Quality Inventories"])
-    writeGeoJSON(df_total, "coord_ratio", ["1A Consonant Inventories", "2A Vowel Quality Inventories", "3A Consonant-Vowel Ratio"])
-    if full==True:
+    argc = len(sys.argv)
+    if (argc < 4):
+        print("Utilisation: parse.py CSV_FILE TYPE PATH_DIRECTORY...")
+    if sys.argv[1][-4:] == ".csv":
+        csv_file = sys.argv[1]
+    else:
+        print("Utilisation: parse.py CSV_FILE TYPE PATH_DIRECTORY...")
+    geojson_path_directory = None
+    description_path_directory = None
+    full_description = False
+
+    for i, arg in enumerate(sys.argv):
+        lower = arg.lower()
+        if (lower == "--geojson"):
+            if i + 1 > len(sys.argv):
+                print("Utilisation: parse.py CSV_FILE TYPE PATH_DIRECTORY...")
+                break
+            else:
+                geojson_path_directory = sys.argv[i+1]
+        elif (lower == "--desc" or lower == "--fdesc"):
+            if i + 1 > len(sys.argv):
+                print("Utilisation: parse.py CSV_FILE TYPE PATH_DIRECTORY...")
+                break
+            else:
+                if (lower == "--fdesc"):
+                    full_description = True
+                description_path_directory = sys.argv[i+1]
+
+    df_total = pd.read_table(csv_file, ",", encoding='utf-8')
+    if geojson_path_directory != None:
+        print("GeoJson...")
+        writeGeoJSON(df_total, "coord_consonant", ["1A Consonant Inventories"], geojson_path_directory)
+        writeGeoJSON(df_total, "coord_vowel", ["2A Vowel Quality Inventories"], geojson_path_directory)
+        writeGeoJSON(df_total, "coord_ratio", ["1A Consonant Inventories", "2A Vowel Quality Inventories", "3A Consonant-Vowel Ratio"], geojson_path_directory)
+    if description_path_directory != None:
         print("Description...")
         df_qualitative = df_total.select_dtypes(include=["object"])
-        writeColumnDescription(df_qualitative, desc)
+        writeColumnDescription(df_qualitative, description_path_directory, full_description)
