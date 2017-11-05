@@ -2,7 +2,7 @@
 ###### Par Yannick Nana, Colin Pimmel et Modibo Toure
 
 ## Présentation
-Le but de se projet est de répondre à certaines problématique de phonologie et de morphologie par l'intérmédiaire de python et des sciences statistiques.
+Le but de se projet est de répondre à certaines problématiques de phonologies et de morphologies par l'intermédiaire de python et des sciences statistiques.
 Nos problématiques sont :
 >Y a-t-il un lien entre le nombre de consones et le nombre de voyelle dans les langues ?
 
@@ -16,11 +16,11 @@ Nos problématiques sont :
 
 Pour répondre à cette problématique nous analysons un fichier csv : Data/language.csv
 
-Pour plus de simplicité vous pouvez lancer le ficheir make.sh dans votre invité de commande pour tout compiler et visualiser directement le site web de présentation.
+Pour plus de simplicité vous pouvez lancer le fichier make.sh dans votre invité de commande pour tout compiler et visualiser directement le site web de présentation du projet.
 
 ## Python
 
-Ce fichier est analysable de deux manières:
+Notre projet analyse le fichier csv de deux manières:
 - Avec le programme parser.py dans Source/parser.py qui va créer un fichier description.txt dans le dossier Resultats/
    mais aussi des fichiers javascript dans le dossier Source/Map afin d'avoir des cartes interactives en HTML5 et js.
    Le programme possède différente options :
