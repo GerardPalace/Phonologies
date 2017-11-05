@@ -5,8 +5,11 @@
 Le but de se projet est de répondre à certaines problématique de phonologie et de morphologie par l'intérmédiaire de python et des sciences statistiques.
 Nos problématiques sont :
 >Y a-t-il un lien entre le nombre de consones et le nombre de voyelle dans les langues ?
+
 >Y a-t-il des liens avec d'autres phénomènes phonologiques ? Ton, nasalisation ?
+
 >Y a-t-il des liens entre inventaire de sons et distribution géographique ?
+
 >Y a-t-il des liens entre inventaire de sons et la morphologie des langues ?
 
 ## Installation
