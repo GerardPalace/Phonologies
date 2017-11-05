@@ -5,9 +5,9 @@
 Le but de se projet est de répondre à certaines problématique de phonologie et de morphologie par l'intérmédiaire de python et des sciences statistiques.
 Nos problématiques sont :
 >Y a-t-il un lien entre le nombre de consones et le nombre de voyelle dans les langues ?
-Y a-t-il des liens avec d'autres phénomènes phonologiques ? Ton, nasalisation ?
-Y a-t-il des liens entre inventaire de sons et distribution géographique ?
-Y a-t-il des liens entre inventaire de sons et la morphologie des langues ?
+>Y a-t-il des liens avec d'autres phénomènes phonologiques ? Ton, nasalisation ?
+>Y a-t-il des liens entre inventaire de sons et distribution géographique ?
+>Y a-t-il des liens entre inventaire de sons et la morphologie des langues ?
 
 ## Installation
 
@@ -41,7 +41,7 @@ Ce fichier est analysable de deux manières:
 	- --show afin de montrer à l'écran chaque graphique ainsi créer en plus de les sauvegarder.
 
    statistics.py utilise principalement une fonction :
-	- compareColuns(dataframe, x_name, y_name, alt_x_name=None, alt_y_name=None, show=False)
+	- compareColumns(dataframe, x_name, y_name, alt_x_name=None, alt_y_name=None, show=False)
 		- dataframe un dataframe
 		- x_name, le nom d'une colonnes à comparé
 		- y_name, le nom d'une colonnes comparante
