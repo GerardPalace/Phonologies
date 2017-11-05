@@ -28,7 +28,7 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     for i, v in enumerate(y_possible):
         y_possible[i] = _getLabelName(v)
 
-    fig = plt.figure(figsize=(11.69291, 8.267717))
+    fig = plt.figure(figsize=(17, 9))
     title = "Comparaison " + y_name + " par " + x_name
     plt.title(title)
     width = 0.9/(len(x_repartitions))
