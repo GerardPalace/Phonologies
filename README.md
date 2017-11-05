@@ -18,7 +18,7 @@ Pour répondre à cette problématique nous analysons un fichier csv : Data/lang
 
 Pour plus de simplicité vous pouvez lancer le fichier make.sh dans votre invité de commande pour tout compiler et visualiser directement le site web de présentation du projet.
 
-## Python
+## Python (deprecated)
 
 Notre projet analyse le fichier csv de deux manières:
 - Avec le programme parser.py dans Source/parser.py qui va créer un fichier description.txt dans le dossier Resultats/
