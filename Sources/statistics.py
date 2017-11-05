@@ -28,7 +28,7 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     for i, v in enumerate(y_possible):
         y_possible[i] = _getLabelName(v)
 
-    fig = plt.figure(figsize=(20, 12))
+    fig = plt.figure(figsize=(11.69291, 8.267717))
     title = "Comparaison " + y_name + " par " + x_name
     plt.title(title)
     width = 0.9/(len(x_repartitions))
@@ -76,10 +76,10 @@ def _getPercentageOfColumns(dataframe, columns_name, possible_values):
         percentage[i] = round(p/size * 100, 2)
     return percentage
 
-def compareColumns(dataframe, x_name, y_name, alt_x_name="", alt_y_name="", show=False):
-    if alt_x_name == "":
+def compareColumns(dataframe, x_name, y_name, alt_x_name=None, alt_y_name=None, show=False):
+    if alt_x_name == None:
         alt_x_name = _getLabelName(x_name)
-    if alt_y_name == "":
+    if alt_y_name == None:
         alt_y_name = _getLabelName(y_name)
     x_possible = getPossibleValues(dataframe, x_name)
     x = []
@@ -101,14 +101,23 @@ if __name__ == "__main__":
         if arg=="--show":
             show = True
     df_total = pd.read_table("../Data/language.csv", ",", encoding='utf-8')
-    compareColumns(df_total, "2A Vowel Quality Inventories", "1A Consonant Inventories", "inventaire de voyelles", "inventaire de consones", show)
-    compareColumns(df_total, "13A Tone", "10A Vowel Nasalization", "système de tons", "nasalisation des voyelles", show)
 
     morphology = ["20A Fusion of Selected Inflectional Formatives", "21A Exponence of Selected Inflectional Formatives", "22A Inflectional Synthesis of the Verb",\
     "23A Locus of Marking in the Clause", "24A Locus of Marking in Possessive Noun Phrases", "25A Locus of Marking: Whole-language Typology", \
     "26A Prefixing vs. Suffixing in Inflectional Morphology", "27A Reduplication", "28A Case Syncretism", "29A Syncretism in Verbal Person/Number Marking"]
-    total = len(morphology)*3
+
+    total = len(morphology)*3 + 2
     current_progress = 0
+    print("Graphics...")
+
+    progressbar(current_progress/total)
+    current_progress += 1
+    compareColumns(df_total, "2A Vowel Quality Inventories", "1A Consonant Inventories", "inventaire de voyelles", "inventaire de consones", show)
+
+    progressbar(current_progress/total)
+    current_progress += 1
+    compareColumns(df_total, "13A Tone", "10A Vowel Nasalization", "système de tons", "nasalisation des voyelles", show)
+
     for name in morphology:
         progressbar(current_progress/total)
         current_progress += 1

@@ -27,7 +27,7 @@ def getPossibleValues(dataframe, columns_name):
             possible_values.append(dataframe[columns_name][i])
     return sorted(possible_values, key=compareQualitativeString)
 
-def writeColumnDescription(dataframe, writePossible):
+def writeColumnDescription(dataframe, writePossible=False):
     txt_file = createTxT("../Resultats/description.txt")
     total = len(dataframe.columns)
     current_progress = 0
