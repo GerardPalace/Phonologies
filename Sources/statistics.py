@@ -34,7 +34,7 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     width = 0.9/(len(x_repartitions))
     range1 = range(len(total_repartition))
     colors = ["#FF00FF", "#bc80bd", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#ffffb3", "#ccebc5", "#ffed6f"]
-    label = "Parmi toutes les valeurs"
+    label = ""
     for s, x in enumerate(x_repartitions):
         rangei = [l + width*s for l in range1]
         label = "Si " + x_name + " est " + x_possible[s]
@@ -45,12 +45,18 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
             rect_y = rect.get_height()/2
             rect_width = rect.get_width()
             plt.text(rect_x + rect_width/2, rect_y, str(int(x[i])) + "%",ha="center", va="bottom")
+            if (s==0):
+                plt.text(rect_x, total_repartition[i], str(int(total_repartition[i]))+ "%",ha="center", va="bottom", color=colors[0])
             axes.add_artist(line.Line2D((rect_x, rect_x + rect_width), (total_repartition[i], total_repartition[i]), color=colors[0], linewidth=2, linestyle = 'dashed'))
 
     plt.xticks([r + width for r in range(len(total_repartition))], y_possible)
     plt.ylabel("Pourcentage (%)")
     plt.xlabel(y_name)
-    plt.legend()
+    global_line = line.Line2D([], [], color=colors[0], linewidth=2, linestyle = 'dashed')
+    handles, labels = plt.gca().get_legend_handles_labels()
+    handles.append(global_line)
+    labels.append("Parmi toutes les valeurs")
+    plt.legend(handles, labels)
 
     fig_id = fig_id + 1
     plt.savefig("../Resultats/figure" + str(fig_id) + ".png")
