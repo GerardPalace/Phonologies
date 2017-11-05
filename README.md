@@ -1,4 +1,4 @@
-#Phonologies
+# Phonologies
 ###### Par Yannick Nana, Colin Pimmel et Modibo Toure
 
 Le but de se projet est de répondre à certaines problématique de phonologie et de morphologie par l'intérmédiaire de python et des sciences statistiques.
