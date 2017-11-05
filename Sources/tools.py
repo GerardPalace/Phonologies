@@ -27,7 +27,7 @@ def compareQualitativeString(string):
     else:
         return 0
 
-def createTxT(filepath):
+def createDirFromPath(filepath):
     split = filepath.split("/")
     pathdirectory = ""
     for i in range(len(split) - 2):
@@ -35,4 +35,7 @@ def createTxT(filepath):
     pathdirectory += split[-2]
     if not os.path.exists(pathdirectory):
         os.makedirs(pathdirectory)
+
+def createTxT(filepath):
+    createDirFromPath(filepath)
     return open(filepath, "w", encoding='utf-8')

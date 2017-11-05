@@ -3,7 +3,7 @@ import matplotlib.lines as line
 import pandas as pd
 import numpy as np
 import sys
-from tools import progressbar
+from tools import progressbar, createDirFromPath
 from parser import getPossibleValues
 
 #Y a-t-il un lien entre le nombre de consones et le nombre de voyelle dans les langues ?
@@ -28,7 +28,7 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     for i, v in enumerate(y_possible):
         y_possible[i] = _getLabelName(v)
 
-    fig = plt.figure(figsize=(17, 9))
+    fig = plt.figure(figsize=(20, 10))
     title = "Comparaison " + y_name + " par " + x_name
     plt.title(title)
     width = 0.9/(len(x_repartitions))
@@ -59,7 +59,9 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     plt.legend(handles, labels)
 
     fig_id = fig_id + 1
-    plt.savefig("../Resultats/figure" + str(fig_id) + ".png")
+    filepath = "../Resultats/figure" + str(fig_id) + ".svg"
+    createDirFromPath(filepath)
+    plt.savefig(filepath)
     return fig
 
 def _getPercentageOfColumns(dataframe, columns_name, possible_values):
