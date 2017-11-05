@@ -2,7 +2,7 @@
 ###### Par Yannick Nana, Colin Pimmel et Modibo Toure
 
 ## Présentation
-Le but de se projet est de répondre à certaines problématiques de phonologies et de morphologies par l'intermédiaire de python et des sciences statistiques.
+Le but de ce projet est de répondre à certaines problématiques de phonologies et de morphologies par l'intermédiaire de python et des sciences statistiques.
 Nos problématiques sont :
 >Y a-t-il un lien entre le nombre de consones et le nombre de voyelle dans les langues ?
 
