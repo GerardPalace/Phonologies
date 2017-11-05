@@ -1,16 +1,21 @@
 # Phonologies
 ###### Par Yannick Nana, Colin Pimmel et Modibo Toure
 
+## Présentation
 Le but de se projet est de répondre à certaines problématique de phonologie et de morphologie par l'intérmédiaire de python et des sciences statistiques.
 Nos problématiques sont :
-Y a-t-il un lien entre le nombre de consones et le nombre de voyelle dans les langues ?
+>Y a-t-il un lien entre le nombre de consones et le nombre de voyelle dans les langues ?
 Y a-t-il des liens avec d'autres phénomènes phonologiques ? Ton, nasalisation ?
 Y a-t-il des liens entre inventaire de sons et distribution géographique ?
 Y a-t-il des liens entre inventaire de sons et la morphologie des langues ?
 
+## Installation
+
 Pour répondre à cette problématique nous analysons un fichier csv : Data/language.csv
 
 Pour plus de simplicité vous pouvez lancer le ficheir make.sh dans votre invité de commande pour tout compiler et visualiser directement le site web de présentation.
+
+## Python
 
 Ce fichier est analysable de deux manières:
 - Avec le programme parser.py dans Source/parser.py qui va créer un fichier description.txt dans le dossier Resultats/
@@ -44,6 +49,8 @@ Ce fichier est analysable de deux manières:
 		- alt_y_name, le nom à afficher de la colonne y_name (y_name si None)
 		- show, un booléen qui affiche plus de sauvegarder le graphique si égale à True
 	   Cette fonction créer un graphique comparant deux colonnes selon le pourcentage de y pour chaque valeurs possible de x
+
+## Bibliographie
 
 Ce projet utilise les modules python suivants :
  - numpy
