@@ -68,3 +68,7 @@ Mais aussi :
  - Leaflet, an open-source JavaScript library for mobile-friendly interactive maps : http://leafletjs.com/
  - Mapbox, An open source mapping platform for custom designed maps : https://www.mapbox.com/
  - WALS Online, a large database of structural properties of languages gathered from descriptive materials : http://wals.info/
+
+Professeurs : 
+- thibaut.lietard@univ-lille3.fr
+- mathieu.dehouck@inria.fr

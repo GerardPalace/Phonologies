@@ -10,7 +10,7 @@ import sys
 # -> Faire une listes des colonnes avec pour chacune les valeurs possibles. (parseQualitativeValue)
 
 def _writeTxtSection(title, content, file, content_per_raw):
-    file.write(title)
+    file.write(title + "\n")
     i = 1
     for value in content:
         if i % content_per_raw == 0 or i > len(content):
@@ -70,11 +70,11 @@ def writeGeoJSON(dataframe, filename, columns_name, path_directory):
 if __name__ == "__main__":
     argc = len(sys.argv)
     if (argc < 4):
-        print("Utilisation: parse.py CSV_FILE TYPE PATH_DIRECTORY...")
+        print("Utilisation: parser.py CSV_FILE TYPE PATH_DIRECTORY...")
     if sys.argv[1][-4:] == ".csv":
         csv_file = sys.argv[1]
     else:
-        print("Utilisation: parse.py CSV_FILE TYPE PATH_DIRECTORY...")
+        print("Utilisation: parser.py CSV_FILE TYPE PATH_DIRECTORY...")
     geojson_path_directory = None
     description_path_directory = None
     full_description = False
@@ -83,13 +83,13 @@ if __name__ == "__main__":
         lower = arg.lower()
         if (lower == "--geojson"):
             if i + 1 > len(sys.argv):
-                print("Utilisation: parse.py CSV_FILE TYPE PATH_DIRECTORY...")
+                print("Utilisation: parser.py CSV_FILE TYPE PATH_DIRECTORY...")
                 break
             else:
                 geojson_path_directory = sys.argv[i+1]
         elif (lower == "--desc" or lower == "--fdesc"):
             if i + 1 > len(sys.argv):
-                print("Utilisation: parse.py CSV_FILE TYPE PATH_DIRECTORY...")
+                print("Utilisation: parser.py CSV_FILE TYPE PATH_DIRECTORY...")
                 break
             else:
                 if (lower == "--fdesc"):

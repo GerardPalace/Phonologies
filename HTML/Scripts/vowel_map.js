@@ -41,7 +41,7 @@ legend.onAdd = function(mymap)
   labels = ["Small (2-4)", "Average (5-6)", "Large (7-14)"];
 
   // loop through our density intervals and generate a label with a colored square for each interval
-  div.innerHTML += "<h4>Consonant Inventory</h4>"
+  div.innerHTML += "<h4>Inventaire de voyelles</h4>"
   for (var i = 0; i < grades.length; i++)
   {
     div.innerHTML += '<i style="background:' + getColor(grades[i]) + '"></i> ' +

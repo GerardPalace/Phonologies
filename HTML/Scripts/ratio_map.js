@@ -8,9 +8,9 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 function onEachFeature(feature, layer) {
   if (feature.properties && feature.properties) {
     layer.bindPopup("Langue : " + feature.properties.name +
-                    "<br> Consonant Inventory : " + feature.properties.description1 +
-                    "<br> Vowel Inventory : " + feature.properties.description2 +
-                    "<br> Ratio : " + feature.properties.description3);
+                    "<br> Inventaire de consonnes : " + feature.properties.description1 +
+                    "<br> Inventaire de voyelles : " + feature.properties.description2 +
+                    "<br> Ratio consonnes/voyelles : " + feature.properties.description3);
   }
 }
 
@@ -46,7 +46,7 @@ legend.onAdd = function(mymap)
   labels = ["Low", "Moderately low", "Average", "Moderately high", "High"];
 
   // loop through our density intervals and generate a label with a colored square for each interval
-  div.innerHTML += "<h4>Consonant Inventory</h4>"
+  div.innerHTML += "<h4>Ratio consonnes/voyelles</h4>"
   for (var i = 0; i < grades.length; i++)
   {
     div.innerHTML += '<i style="background:' + getColor(grades[i]) + '"></i> ' +

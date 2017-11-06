@@ -17,8 +17,7 @@ def _getLabelName(string):
     res = ""
     splitted = string.split(" ")
     for i, split_str in enumerate(splitted):
-        if (i > 0):
-            res += split_str.lower() + " "
+        res += split_str.lower() + " "
     return res[:-1]
 
 def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition, path_directory):
@@ -106,8 +105,8 @@ if __name__ == "__main__":
     morphology = ["20A Fusion of Selected Inflectional Formatives", "21A Exponence of Selected Inflectional Formatives", "22A Inflectional Synthesis of the Verb",\
     "23A Locus of Marking in the Clause", "24A Locus of Marking in Possessive Noun Phrases", "25A Locus of Marking: Whole-language Typology", \
     "26A Prefixing vs. Suffixing in Inflectional Morphology", "27A Reduplication", "28A Case Syncretism", "29A Syncretism in Verbal Person/Number Marking"]
-
-    total = len(morphology)*3 + 2
+    sound_inventory = ["1A Consonant Inventories", "2A Vowel Quality Inventories", "3A Consonant-Vowel Ratio"]
+    total = (len(morphology)+1)*3 + 2
     current_progress = 0
     print("Graphics...")
 
@@ -129,4 +128,8 @@ if __name__ == "__main__":
         progressbar(current_progress/total)
         current_progress += 1
         compareColumns(df_total, "3A Consonant-Vowel Ratio", name, path_directory)
+    for name in sound_inventory:
+        progressbar(current_progress/total)
+        current_progress += 1
+        compareColumns(df_total, name, "macroarea", path_directory)
     progressbar(1)
