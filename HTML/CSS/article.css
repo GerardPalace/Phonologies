@@ -42,7 +42,7 @@ h3
 	letter-spacing: -0.015em;
 }
 
-p
+p, article li, blockquote
 {
 	color: #555;
 
@@ -50,8 +50,13 @@ p
   text-align: justify;
 	font-size: 20px;
 	font-weight: 400;
-	line-height: 36px;
+	line-height: 24px;
 	text-indent: 36px;
+}
+
+em
+{
+  font-style: italic;
 }
 
 .figure img
