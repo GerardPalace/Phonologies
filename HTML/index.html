@@ -32,17 +32,57 @@
 			</ul>
 		</nav>
 		<article>
-			<h1>Phonologie</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar efficitur neque ullamcorper mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam faucibus urna et ultrices fermentum. Fusce ultricies auctor lectus vel venenatis. Vestibulum tincidunt sapien et odio porta ullamcorper. Integer interdum metus vitae urna hendrerit hendrerit sit amet eu nisi. Donec egestas elit erat, mollis suscipit neque mollis a. Integer vitae nulla vulputate, ornare odio eu, volutpat quam. Maecenas a lacus ligula. Vestibulum id gravida dolor. Aenean sapien libero, ultricies vel hendrerit id, congue sed turpis. Nulla vehicula venenatis est, et pharetra diam porttitor id. Phasellus mattis ante vitae est semper, viverra vestibulum justo volutpat. Integer pretium at eros non luctus. Aliquam sed ex a enim gravida placerat. Morbi molestie lorem vel iaculis auctor.</p>
-			<h2>Big-Section</h2>
-			<p>Nam ipsum velit, vehicula <a href="vowel_inventories.html">fermentum</a> nisi non, <a href="consonant_inventories.html">convallis sagittis enim</a>. Fusce vitae odio ex. Pellentesque tellus est, rutrum eget lacus vitae, aliquam molestie leo. Curabitur dignissim lectus dolor, in tincidunt sapien bibendum at. Duis ullamcorper massa nec est vehicula euismod. Duis eget lacus rhoncus sem scelerisque commodo dignissim ut dui. Vivamus pharetra non massa vitae ornare. Nam porttitor metus sed mi mollis ultricies. Vestibulum arcu ligula, volutpat nec gravida nec, molestie non elit. Donec convallis lobortis lectus, vel commodo eros pretium a. Sed sit amet lectus eros.</p>
-			<h3>Small-Section</h3>
-			<p>Morbi cursus elit a nisi aliquam ultricies. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam euismod euismod est sed pharetra. Vivamus a purus vitae lorem blandit congue nec vel ligula. Cras luctus ex velit, sed pulvinar est euismod at. Mauris eu mauris ex. Aliquam purus orci, lacinia a sapien accumsan, hendrerit interdum lectus. In ut ornare nulla, sed molestie lectus. Sed sagittis, magna sed varius fermentum, arcu libero accumsan elit, in porttitor quam sapien sed erat.</p>
-			<p class="figure"><img width="100%" src="../Images/figure9.svg" alt="figure 9"/><br/>Figure 01</p>
-			<p>Suspendisse vitae tellus vestibulum est ornare fermentum id et dolor. Nunc sit amet volutpat mi. Sed varius fringilla erat, sed faucibus orci facilisis eget. Suspendisse eu hendrerit libero. Sed quis ante ut dui vestibulum euismod. In vel ultrices elit, a rhoncus libero. Sed sed nibh diam. Nulla lectus nisl, dictum id tortor sit amet, tristique eleifend neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce non eros dui. Praesent rhoncus tortor a efficitur viverra. Vivamus metus arcu, hendrerit id mollis a, congue sit amet arcu. Fusce interdum tincidunt nisi. Morbi pellentesque at augue at pellentesque.</p>
-			<h2>Another section</h2>
-			<p>Vivamus tincidunt sed arcu ac euismod. Curabitur bibendum blandit malesuada. Donec odio nibh, aliquet vitae erat sed, posuere maximus ligula. Nunc nec suscipit tortor. Duis rhoncus velit a leo gravida sodales. Donec faucibus diam vitae justo mollis sollicitudin. Proin accumsan sem vel ante ultrices, eget varius augue mollis. Etiam eu magna est. Vivamus eros tortor, ullamcorper eu leo eget, vehicula lacinia tellus. Fusce nec accumsan purus, non consectetur nunc. Fusce id finibus justo. Duis ac blandit quam. Sed molestie urna id quam tempus placerat. Fusce maximus ac purus sit amet viverra. Sed tempor fermentum odio, at faucibus nisl. Vivamus faucibus dui ac libero egestas dictum.</p>
-			<p class="figure"><img width="100%" src="../Images/figure32.svg"/><br />Figure 32</p>
+			<h2>Introduction</h2>
+			<p>Ce projet a pour cadre, la phonologie des langues du mondes. En linguistique, la phonologie correspond à la discipline qui étudie l'organisation des sons au sein des différentes langues.
+On appelle « phonème » les catégories sonores des langues. Par exemple /p/ et /b/ sont deux
+phonèmes du français, car il existe deux mots comme « pain » et « bain », qui ont un sens différent et qui ne diffèrent que par ces deux phonèmes. Pour chaque langue, on peut décrire l’ensemble des sons qui ont une fonction contrastive. En français par exemple on distingue les consonnes p, t, k, b, d, g, f, s, ch, v, z, j, m, n, r, l, et on obtient un inventaire des phonèmes.
+Si on compare l’inventaire des phonèmes des langues humaines, on obtient un inventaire total qui reste limité à quelques centaines environ, parmi lesquels chaque langue sélectionne un sous-ensemble de phonèmes.
+Dans notre projet nous cherchons à savoir si l’inventaire de phonèmes d’une langue peut influencer la morphologie (étude des types et de la forme des mots dans une langue) de celle-ci et de quoi dépend la composition de cet inventaire.</p>
+			<h2>La base de donnée WALS</h2>
+			<p>Afin d’étudier ces phénomènes nous utilisons la base de donnée du World Atlas of Language Structure (WALS). Cette base de donnée regroupe les propriétés structurelles (phonologique, grammatical et lexical) des langues à partir du travail de 55 auteurs.
+Nous étudions cette base de donnée à partir d’un seul fichier au format csv (comma separated value) dans lequel chaque ligne correspond à une langue tandis que chaque colonne à une propriété de celle-ci.
+Nous nous intéressons aux propriétés phonologiques et plus précisément celles qui décrivent l’inventaires de phonèmes de chaque langues. Toutes qualitatives, les propriétés classent chaque valeur selon un ordre de grandeur ou des catégories lié à la propriété. Ainsi l’inventaire de consonnes peut être décrit selon 5 échelons : petit, modérément petit, moyen, modérément large ou large. Tandis que l’inventaire de voyelles pourra être : petit, moyen ou large.
+En plus des propriétés structurelles de chaque langue, la base de donnée contient également, pour chaque langue, le nom, la position géographique précise (en longitude et latitude) mais également moins précise (Eurasie, Australie, Amérique du Nord/du Sud, Papouasie, Afrique). </p>
+			<h2>Problématiques</h2>
+			<p>Dans ce projet nous nous intéressons aux influences et aux dépendances que peut avoir l’inventaire de phonèmes d’une langue sur les autres propriétés de celles-ci. La première étape est donc de savoir ce qui influe sur l’inventaire des phonèmes.
+Ce qui nous donne notre première problématique :
+
+<blockquote>Problématique 1 : Existe-t-il des liens entre inventaire des phonèmes et distribution géographique ?</blockquote>
+
+<p>Nous cherchons également à savoir si la composition d’un inventaires de phonèmes est défini selon ses critères internes et donc si au sein de l’inventaire de phonèmes; est-ce que la taille de l’inventaire de consonnes dépend ou influe sur la taille de l’inventaire de voyelles, ou si les phénomènes de nasalisations ou les systèmes tonique d’une langue influent sur l’inventaire de sons de celle-ci. Ce qui nous donne les problématiques suivantes :</p>
+
+<blockquote>Problématique 2 : Existe-t-il un lien entre le nombre de consonnes et le nombre de voyelles dans les langues ?</blockquote>
+
+<blockquote>Problématique 3 : La présence ou l’absence d’un système tonal influe-t-il sur la composition de l’inventaire de phonèmes ?</blockquote>
+
+<blockquote>Problématique 4 : La présence ou l'absence de nasalisation de certaines voyelles influe t-elle sur l’inventaire de phonèmes ?</blockquote>
+
+<p>Maintenant le but est de savoir si l’inventaire de phonèmes d’une langue est lié aux autres propriétés de celle-ci. Nous avons choisi de voir l’intrication entre phonologie et morphologie mais nous aurions pu nous intéresser à d'autre discipline de la linguistique. Ce qui nous amène à notre dernière problématique :</p>
+
+<blockquote>Problématiques 5: Existe-t-il des liens entre inventaire des sons et la morphologie des langues ?</blockquote>
+
+<p>Et plus précisément la preuve de l’existence d’un lien entre reduplication et l’inventaire de phonèmes dans une langue.</p>
+
+			<h2>Méthodologie</h2>
+			<ul>
+				<li><em>Hypothèse 1 : Il existe une différence significative dans l’inventaire des phonèmes des langues selon la région d’origine de la langue.</em><br/>
+					Pour y répondre, nous calculons, parmi les langues de chaque région, le pourcentage de chaque sous catégorie d'inventaires de phonèmes (petit, moyen ou large pour l'inventaire de voyelles par exemple) et on compare ce pourcentage avec le pourcentage de chaque sous catégorie d'inventaires dans le monde entier cette fois-ci. Si la région qu'on est entrain d'analyser présente des différences importantes avec le pourcentage mondial alors il existe un lien entre inventaires de sons et distribution géographique.
+				</li>
+			</ul>
+			<p>Sur les liens internes à la composition des inventaires de phonèmes :</p>
+			<ul>
+				<li><em>Hypothèse 2 : Il existe une relation entre le nombre de consonnes et le nombre de voyelles dans une langue.</em><br/>Pour vérifier cette hypothèse, nous calculons le pourcentage de consonnes de chaque sous catégories pour un inventaire de voyelle fixé. Nous comparons ces pourcentages avec les pourcentages de chaque inventaire de consonnes dans toutes les langues cette fois-ci. Si il y a un écart important entre les 2 pourcentages cas par cas, c'est qu'il y a une corrélation entre l'inventaire fixé et l'inventaire de consonnes en question.</li>
+				<li><em>Hypothèse 3 : Une langue avec un système de tons complexes possède un inventaire de sons différents d'une langue sans système de tons.</em><br/>Nous comparons les inventaires de sons (nombre de consonnes, de voyelles, nasalisation etc...)
+qui ont un système de tons complexe avec les inventaires de sons des langues qui ont un système moins complexe ou absent.</li>
+				<li><em>Hypothèse 4 : La présence de la nasalisation dans une langue a un impact sur la taille de l'inventaire des voyelles.</em><br/>Pour y répondre, nous devons calculer le pourcentage de chaque sous catégorie d'inventaires de voyelles si la nasalisation est présente et comparer ces valeurs avec le pourcentage des sous catégorie d'inventaires de voyelles globalement. Si le pourcentage d'inventaire de voyelles large est plus important avec une nasalisation que dans la globalité de notre base de donnée alors il y a corrélation entre la nasalisation des voyelles et la taille de l'inventaire de voyelles dans une langue.</li>
+			</ul>
+			<p>Dans le cadre de notre problématique du lien entre inventaire de sons avec les autres disciplines de la linguistique, en l'occurence la morphologie.</p>
+			<ul>
+				<li><em>Hypothèse 5 : Les langues possédant un petit inventaire de phonèmes, ont plus recours à la réduplication</em><br/>Afin de vérifier ou d'invalider cette hypothèse, nous calculons le pourcentage de langues utilisant le redoublement et le pourcentage de langue ne l'utilisant pas ou peu pour ensuite comparé ce pourcentage avec la moyenne mondiale. Si il y a un taux plus important de réduplication dans les langues possédant un petit inventaire de sons alors l'hypothèse est validée.</li>
+			</ul>
+			<h2>Conclusion</h2>
+			<p>L'analyse phonologique des langues que nous faisons est pertinente pour une étude synchronique des langues, mais la recherche de liens doit être complétée par d'autres expériences et résultats.
+En effet, l'étude des phénomènes phonologiques est complexe et même si nos résultats montrent une corrélation entre plusieurs phénomènes nous ne pouvont pas conclure d'une causalité. L'inventaire de sons d'une langue évoluent également au fil du temps comme en témoigne l'étude diachronique du français et également par le contact culturel entre 2 langues voisines géographiquement ainsi le son /ing/ provenant de l'anglais est venu récemment enrichir l'inventaire de sons du français sans causer de constructions morphologiques différentes ou altérer les autres sons de la langue. De même la disparition progressive du contraste entre les sons /é/ et /è/ en français ne va pas changer les autres phonèmes utilisés en français.</p>
 		</article>
 	</body>
 </html>
