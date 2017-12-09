@@ -58,7 +58,7 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     plt.legend(handles, labels)
 
     fig_id = fig_id + 1
-    filepath = path_directory + "/figure" + str(fig_id) + ".svg"
+    filepath = path_directory + "/figure" + str(fig_id) + ".png"
     createDirFromPath(filepath)
     plt.savefig(filepath)
     return fig
@@ -90,6 +90,9 @@ def compareColumns(dataframe, x_name, y_name, path_directory):
     fig = _drawGraph(x_repartitions, _getLabelName(x_name), x_possible, _getLabelName(y_name), y_possible, total_repartition, path_directory)
     plt.close(fig)
 
+def getPercentageOfColumn(dataframe, c_name):
+    c_name = getPossibleValues(dataframe, c_name)
+
 if __name__ == "__main__":
     argc = len(sys.argv)
     if (argc < 3):
@@ -102,34 +105,48 @@ if __name__ == "__main__":
 
     df_total = pd.read_table(csv_file, ",", encoding='utf-8')
 
-    morphology = ["20A Fusion of Selected Inflectional Formatives", "21A Exponence of Selected Inflectional Formatives", "22A Inflectional Synthesis of the Verb",\
-    "23A Locus of Marking in the Clause", "24A Locus of Marking in Possessive Noun Phrases", "25A Locus of Marking: Whole-language Typology", \
-    "26A Prefixing vs. Suffixing in Inflectional Morphology", "27A Reduplication", "28A Case Syncretism", "29A Syncretism in Verbal Person/Number Marking"]
+    #morphology = ["20A Fusion of Selected Inflectional Formatives", "21A Exponence of Selected Inflectional Formatives", "22A Inflectional Synthesis of the Verb",\
+    #"23A Locus of Marking in the Clause", "24A Locus of Marking in Possessive Noun Phrases", "25A Locus of Marking: Whole-language Typology", \
+    #"26A Prefixing vs. Suffixing in Inflectional Morphology", "27A Reduplication", "28A Case Syncretism", "29A Syncretism in Verbal Person/Number Marking"]
     sound_inventory = ["1A Consonant Inventories", "2A Vowel Quality Inventories", "3A Consonant-Vowel Ratio"]
-    total = (len(morphology)+1)*3 + 2
+    #total = (len(morphology)+1)*3 + 2$
+    total = 100
     current_progress = 0
     print("Graphics...")
 
     progressbar(current_progress/total)
     current_progress += 1
-    compareColumns(df_total, "2A Vowel Quality Inventories", "1A Consonant Inventories", path_directory)
+    #compareColumns(df_total, "2A Vowel Quality Inventories", "1A Consonant Inventories", path_directory)
 
     progressbar(current_progress/total)
     current_progress += 1
-    compareColumns(df_total, "13A Tone", "10A Vowel Nasalization", path_directory)
+    #compareColumns(df_total, "13A Tone", "10A Vowel Nasalization", path_directory)
 
-    for name in morphology:
-        progressbar(current_progress/total)
-        current_progress += 1
-        compareColumns(df_total, "1A Consonant Inventories", name, path_directory)
-        progressbar(current_progress/total)
-        current_progress += 1
-        compareColumns(df_total, "2A Vowel Quality Inventories", name, path_directory)
-        progressbar(current_progress/total)
-        current_progress += 1
-        compareColumns(df_total, "3A Consonant-Vowel Ratio", name, path_directory)
+    #for name in morphology:
+    #    progressbar(current_progress/total)
+    #    current_progress += 1
+    #    compareColumns(df_total, "1A Consonant Inventories", name, path_directory)
+    #    progressbar(current_progress/total)
+    #    current_progress += 1
+    #    compareColumns(df_total, "2A Vowel Quality Inventories", name, path_directory)
+    #    progressbar(current_progress/total)
+    #    current_progress += 1
+    #    compareColumns(df_total, "3A Consonant-Vowel Ratio", name, path_directory)
+
+
+    #Hypothèse 1
     for name in sound_inventory:
         progressbar(current_progress/total)
         current_progress += 1
-        compareColumns(df_total, name, "macroarea", path_directory)
+        compareColumns(df_total, "macroarea", name, path_directory)
+    #Hypothèse 2
+    compareColumns(df_total, "1A Consonant Inventories", "2A Vowel Quality Inventories", path_directory)
+    #Hypothèse 3
+    for name in sound_inventory:
+        compareColumns(df_total, "13A Tone", name, path_directory)
+    #Hypothèse 4
+    compareColumns(df_total, "10A Vowel Nasalization", "2A Vowel Quality Inventories", path_directory)
+    #Hypothèse 5
+    for name in sound_inventory:
+        compareColumns(df_total, "27A Reduplication", name, path_directory)
     progressbar(1)
