@@ -12,13 +12,15 @@ from parser import getPossibleValues
 #Y a-t-il des liens entre inventaire de sons et la morphologie des langues ?
 
 fig_id = 0
+fig_id2 = 0
 
 def _getLabelName(string):
-    res = ""
-    splitted = string.split(" ")
-    for i, split_str in enumerate(splitted):
-        res += split_str.lower() + " "
-    return res[:-1]
+    #res = ""
+    #splitted = string.split(" ")
+    #for i, split_str in enumerate(splitted):
+    #    res += split_str.lower() + " "
+    #return res[:-1]
+    return string
 
 def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition, path_directory):
     global fig_id
@@ -61,7 +63,61 @@ def _drawGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_rep
     filepath = path_directory + "/figure" + str(fig_id) + ".png"
     createDirFromPath(filepath)
     plt.savefig(filepath)
-    return fig
+    plt.close(fig)
+
+def _drawSmallGraph(x_repartitions, x_name, x_possible, y_name, y_possible, total_repartition, path_directory):
+    #for i, v in enumerate(x_possible):
+    #    small_repartition = []
+    #    somme = 0
+    #    for j in x_repartions[i]:
+    #        small_repartition.append(j)
+    #        somme += j
+    #    print(v + " : " + str(small_repartition) + " = " + str(somme) + "\n")
+    #somme2 = 0
+    #for j in total_repartition:
+    #    somme2 += j
+    #print("world : " + str(total_repartition) + " = " + str(somme) + "\n")
+    global fig_id2
+    for i, v in enumerate(x_possible):
+        x_possible[i] = _getLabelName(v)
+    for i, v in enumerate(y_possible):
+        y_possible[i] = _getLabelName(v)
+
+    colors = ["#FF00FF", "#bc80bd", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#ffffb3", "#ccebc5", "#ffed6f"]
+    for x, v, in enumerate(x_possible):
+        graph = []
+        for y, u in enumerate(y_possible):
+            graph2 = []
+            graph2.append(x_repartitions[x][y])
+            graph2.append(total_repartition[y])
+            graph.append(graph2)
+
+        fig = plt.figure(figsize=(20, 10))
+        title = "Comparaison " + y_name + " par " + x_name + " si " + v
+        plt.title(title)
+        width = 0.9/(len(x_repartitions))
+        range1 = range(2)
+        for s, g in enumerate(graph):
+            rangei = [l + width*s for l in range1]
+            label = "Si " + y_name + " est " + y_possible[s]
+            ax = plt.bar(rangei, g, width=width, color=[colors[s + 1] for i in g], label=label)
+            axes = plt.gca()
+            for i, rect in enumerate(ax.patches):
+                rect_x = rect.get_x()
+                rect_y = rect.get_height()/2
+                rect_width = rect.get_width()
+                plt.text(rect_x + rect_width/2, rect_y, str(int(g[i])) + "%",ha="center", va="bottom")
+        plt.xticks([r + width for r in range(2)], [v, "world"])
+        plt.ylabel("Pourcentage (%)")
+        plt.xlabel(x_name)
+        handles, labels = plt.gca().get_legend_handles_labels()
+        plt.legend(handles, labels)
+
+        fig_id2 = fig_id2 + 1
+        filepath = path_directory + "/autre" + str(fig_id2) + ".png"
+        createDirFromPath(filepath)
+        plt.savefig(filepath)
+        plt.close(fig)
 
 def _getPercentageOfColumns(dataframe, columns_name, possible_values):
     size = 0
@@ -87,8 +143,8 @@ def compareColumns(dataframe, x_name, y_name, path_directory):
     x_repartitions = []
     for value in x:
         x_repartitions.append(_getPercentageOfColumns(value, y_name, y_possible))
-    fig = _drawGraph(x_repartitions, _getLabelName(x_name), x_possible, _getLabelName(y_name), y_possible, total_repartition, path_directory)
-    plt.close(fig)
+    _drawGraph(x_repartitions, _getLabelName(x_name), x_possible, _getLabelName(y_name), y_possible, total_repartition, path_directory)
+    _drawSmallGraph(x_repartitions, _getLabelName(x_name), x_possible, _getLabelName(y_name), y_possible, total_repartition, path_directory)
 
 def getPercentageOfColumn(dataframe, c_name):
     c_name = getPossibleValues(dataframe, c_name)
@@ -114,11 +170,11 @@ if __name__ == "__main__":
     current_progress = 0
     print("Graphics...")
 
-    progressbar(current_progress/total)
+    #progressbar(current_progress/total)
     current_progress += 1
     #compareColumns(df_total, "2A Vowel Quality Inventories", "1A Consonant Inventories", path_directory)
 
-    progressbar(current_progress/total)
+    #progressbar(current_progress/total)
     current_progress += 1
     #compareColumns(df_total, "13A Tone", "10A Vowel Nasalization", path_directory)
 
@@ -133,10 +189,9 @@ if __name__ == "__main__":
     #    current_progress += 1
     #    compareColumns(df_total, "3A Consonant-Vowel Ratio", name, path_directory)
 
-
     #Hypothèse 1
     for name in sound_inventory:
-        progressbar(current_progress/total)
+    #    progressbar(current_progress/total)
         current_progress += 1
         compareColumns(df_total, "macroarea", name, path_directory)
     #Hypothèse 2
@@ -149,4 +204,5 @@ if __name__ == "__main__":
     #Hypothèse 5
     for name in sound_inventory:
         compareColumns(df_total, "27A Reduplication", name, path_directory)
-    progressbar(1)
+    compareColumns(df_total, "macroarea", "27A Reduplication", path_directory)
+    #progressbar(1)
